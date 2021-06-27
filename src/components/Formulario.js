@@ -3,7 +3,7 @@ import React, {Fragment, useState} from 'react';
 const Formulario = () => {
 
     //Crearemos el State de Citas
-    const [citas,actualizarCita] = useState({
+    const [cita,actualizarCita] = useState({
         mascota:'',
         propietario:'',
         fecha:'',
@@ -12,9 +12,15 @@ const Formulario = () => {
     });
 
     //Funcion que se ejecuta cada que el usuario escribe en un input
-    const actualizarState = () =>{
-        console.log('escribiendo...');
+    const actualizarState = (e) =>{
+       actualizarCita({
+           ...cita,
+           [e.target.name]:e.target.value
+        })
     } 
+
+    //Extraer los vaores
+    const {mascota,propietario,fecha,hora,sintomas} = cita;
 
 
     return ( <Fragment>
@@ -27,6 +33,7 @@ const Formulario = () => {
                 className="u-full-width"
                 placeholder="Nombre mascota"
                 onChange={actualizarState}
+                value={mascota}
             />
             <label>Nombre Dueño</label>
             <input
@@ -35,6 +42,7 @@ const Formulario = () => {
                 className="u-full-width"
                 placeholder="Nombre propietario"
                 onChange={actualizarState}
+                value={propietario}
             />
             <label>Fecha</label>
             <input
@@ -42,19 +50,22 @@ const Formulario = () => {
                 name="fecha"
                 className="u-full-width"
                 onChange={actualizarState}
+                value={fecha}
             />
             <label>Hora</label>
             <input
                 type="time"
-                name="hota"
+                name="hora"
                 className="u-full-width"
                 onChange={actualizarState}
+                value={hora}
             />
             <label>Sintomas</label>
             <textarea
                 className="u-full-width"
                 name="sintomas"
                 onChange={actualizarState}
+                value={sintomas}
             ></textarea>
             <button 
                 type="submit"
