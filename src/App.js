@@ -1,17 +1,27 @@
 import React, { Fragment, useState } from "react";
 import Formulario from './components/Formulario'
+import Cita from './components/Cita'
 
 function App() {
 
   //Arreglo de citas
   const [citas,guardarCitas] = useState([]);
 
+  //Fucion que elimina una cita por su ID
+  const eliminarCita = id =>{
+    const nuevasCitas = citas.filter(cita => cita.id !== id );
+    guardarCitas(nuevasCitas);
+  }
+
+  //Mensaje condicional
+  const titulo = citas.length === 0 ? 'No hay citas' : 'Administra tus citas';
+
   //Funcion que toma las citas actuales y agrega una nueva
   const crearCita = cita =>{
     guardarCitas([
       ...citas,
       cita
-    ]);
+    ])
   }
 
   return (
@@ -24,7 +34,16 @@ function App() {
               crearCita={crearCita}
             />
           </div>
-          <div className="one-half column">2</div>
+          <div className="one-half column">
+            <h2>{titulo}</h2>
+              {citas.map(cita => (
+                <Cita
+                  key={cita.id}
+                  cita={cita}
+                  eliminarCita={eliminarCita}
+                />
+              ))}
+          </div>
         </div>
       </div>
     </Fragment>
